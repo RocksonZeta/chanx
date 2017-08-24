@@ -2,8 +2,8 @@
 Break through fix sized golang chan and let writing never blocked.
 
 ## idea
-Write : create new channel as current write channel if current write channel is full.
-Read : read next channel if current read channel is empty.
+*Write* : create new channel as current write channel if current write channel is full.  
+*Read* : read next channel if current read channel is empty.
 
 ## example:
 ```go
