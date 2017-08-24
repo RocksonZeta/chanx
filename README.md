@@ -6,7 +6,7 @@ Write : create new channel as current write channel if current write channel is 
 Read : read next channel if current read channel is empty.
 
 ## example:
-```
+```go
 func TestNormalProc(t *testing.T) {
 	cx := NewChanx(1)
 	outWrite := make(chan interface{})
