@@ -8,17 +8,18 @@ import (
 )
 
 func TestNormalProc(t *testing.T) {
-	cx := NewChanx(1)
+	cx := New(1)
 	outWrite := make(chan interface{})
 	go cx.ReadTo(outWrite)
-	var count int32 = 0
+	var sum int32 = 0
 	for j := 0; j < 10; j++ {
 		go func() {
 			for {
 				m := <-outWrite
+				atomic.AddInt32(&sum, int32(m.(int)))
 				fmt.Println("hello ", m)
-				atomic.AddInt32(&count, 1)
 			}
+
 		}()
 	}
 	for j := 0; j < 100; j++ {
@@ -31,8 +32,8 @@ func TestNormalProc(t *testing.T) {
 	}
 	time.Sleep(1 * time.Second)
 
-	if count != 1000 {
-		t.Error("count not match", count)
+	if sum != 4500 {
+		t.Error("sum not match", sum)
 	}
 	time.Sleep(2 * time.Second)
 }
